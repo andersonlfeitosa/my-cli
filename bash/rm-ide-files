@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+ide_files=(".project" ".classpath" ".settings" ".factoryPath" ".sts4-cache" \
+           ".apt_generated" ".springBeans" ".groovy" ".idea" "*.ipr" "*.iml" \
+           "*.iws" "nb-configuration.xml" ".vscode")
+
+help() {
+  echo "USAGE: $(basename "$0") options"
+  echo
+  echo "OPTIONS:"
+  echo
+  echo "-r, --recursive: Remove IDE files from all directories"
+  echo "-c, --current: Remove IDE files from the current directory."
+  echo "               This the default mode."
+  echo "-h, --help: This message"
+}
+
+recursive()  {
+    for ide_file in ${ide_files[@]}; do {
+        FILES=$(find . -name "$ide_file")
+        for file in $FILES; do {
+            rm -rf $file;
+        }; done;
+    }; done; 
+}
+
+current() {
+    for ide_file in ${ide_files[@]}; do
+        rm -rf $ide_file;
+    done
+}
+
+##
+# Main
+#
+case $1 in
+    -r|--recursive) recursive;;
+    -c|--current) current;;
+    -h|--help) help;;
+    *) current;;
+esac
+
+exit $?;
