@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+if [ $# -eq 1 ]
+then
+    TICKET_OR_BRANCH=$1
+
+    if [[ "$TICKET_OR_BRANCH" =~ ^[0-9]+$ ]]
+    then
+        echo "[INFO] Assuming the branch prefix is CUSTPAY"
+        BRANCH="CUSTPAY-$TICKET_OR_BRANCH"
+    else
+        BRANCH=$TICKET_OR_BRANCH
+    fi
+
+    echo "[INFO] Performing git checkout $BRANCH"
+    git checkout "$BRANCH"
+fi

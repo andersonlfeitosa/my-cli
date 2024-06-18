@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+MY_SCRIPT=`basename "$0"`
+
+help() {
+  echo "USAGE: "$MY_SCRIPT" text_to_search file_name_or_file_extension"
+  exit 1;
+}
+
+if [[ "$#" -eq 2 ]]
+then
+    TEXT_TO_SEARCH=$1
+    FILE_NAME_OR_FILE_EXTENSION=$2
+    find . -type f -name "*$FILE_NAME_OR_FILE_EXTENSION*" -exec grep -l "$TEXT_TO_SEARCH" {} \;
+else
+    help;
+fi

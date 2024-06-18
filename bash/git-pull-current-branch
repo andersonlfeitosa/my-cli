@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+CURRENT_BRANCH=$(git branch --show-current);
+
+echo "[INFO] Performing git pull origin $CURRENT_BRANCH"
+
+git pull origin "$CURRENT_BRANCH"
