@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+DEFAULT_FILE=/tmp/database
+DEFAULT_USER=sa
+DEFAULT_PASS=sa
+
+H2_FILE="$DEFAULT_FILE"
+H2_USER="$DEFAULT_USER"
+H2_PASS="$DEFAULT_PASS"
+
+help() {
+  echo "USAGE: $(basename "$0") options"
+  echo
+  echo "OPTIONS:"
+  echo
+  echo "-f, --file: Full path name of the database." 
+  echo "            Default value is: /tmp/database"
+  echo
+  echo "-u, --user: User of the database."
+  echo "            Default value is: sa"
+  echo
+  echo "-p, --pass: Password of the user."
+  echo "            Default value is: sa"
+  exit 0;
+}
+
+run_h2() {
+    cd "$(dirname "$0")" || exit
+    jar="h2-2.2.224.jar"
+    url="jdbc:h2:$H2_FILE;AUTO_SERVER=TRUE"
+    java -cp $jar org.h2.tools.Console -url "$url" -user $H2_USER -password $H2_PASS
+}
+
+##
+# MAIN
+#
+while [ "$#" -gt 0 ]
+  do
+    case $1 in
+      -f|--file) 
+        H2_FILE=$2
+        shift
+        ;;
+      -u|--user) 
+        H2_USER=$2
+        shift
+        ;;
+      -p|--pass) 
+        H2_PASS=$2
+        shift
+        ;;
+      -h|--help) 
+        help
+        ;;
+      *) 
+        help
+        ;;
+    esac
+    shift
+done
+
+run_h2

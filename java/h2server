@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+cd "$(dirname "$0")" || exit
+
+jar="h2-2.2.224.jar"
+
+java -cp $jar org.h2.tools.Server -tcp
